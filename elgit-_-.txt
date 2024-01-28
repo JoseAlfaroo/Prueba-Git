@@ -1,0 +1,419 @@
+// Limpiar pantalla
+* Escribir "clear"
+* Presionar "Ctrl + L"
+
+// Copiar y pegar
+Copiar: Ctrl + Insert
+Pegar: Shift + Insert
+
+// Configurar un usuario
+git config --global user.name ""
+git config --global user.email ""
+
+// Ver info de usuario
+git config --global -l
+
+// Ver y editar info de usuario
+git config --global -e
+
+* Para salir se escribe ":q" y luego se le da a Enter
+
+//Navegar directorios
+cd ruta
+
+// Crear repositorio local
+* Navegar a la carpeta deseada
+git init
+
+// Ver configuración actual
+git config --list
+
+// Mostrar estado de los archivos
+git status
+
+// Agregar a staging
+git add archivo
+
+// Si se quiere agregar todos los archivos del directorio actual a staging
+git add .
+git add -A
+git add --all
+
+// Si se quiere agregar de toda una subcarpeta
+git add subcarpeta/
+
+// Si se quiere agregar de toda una subcarpeta solo donde se tenga cierta extension
+git add subcarpeta/*.extension
+
+// Hacer commit
+git commit archivo
+
+* Presionar "i"
+* Escribir descripcion del commit
+* Presionar "Esc"
+* Escribir ":wq" y luego darle a Enter
+
+// Ver historial de commits
+git log
+
+// Tras modificar archivo, para revertir a versión anterior
+git checkout archivo
+
+// Hacer un commit rápido
+git commit -m "Descripcion del commit"
+
+// Quitar archivo de stage
+git reset archivo
+
+// Quitar archivo ubicado en subcarpeta
+git reset subcarpeta/archivo
+
+// Quitar todo de acuerdo a extension
+git reset subcarpeta/*.extension
+
+// Documentación de los comandos
+git help
+git help (comando)
+
+// Ver diferencias entre versión modificada y una versión con un commit ya hecho
+git diff
+
+// Si haces un commit y quieres hacerle una modificacion (Sin tener que hacer un nuevo commit)
+git commit --amend
+* Confirmar con ":wq"
+
+// Deshacer modificaciones y regresar a ultimo commit
+git checkout -- archivo
+
+// Eliminar modificación enviada al stage
+git reset HEAD archivo
+* Esto quitará del stage la modificación del ultimo commit realizado
+* Y luego para regresar al commit sin modificaciones, se hace lo previamente escrito
+git checkout -- archivo
+
+// Ver historial de commits (en una linea)
+git log --oneline
+
+// Deshacer commit
+* Se regresa al commit indicado, eliminado los commits posteriores
+git reset codigo
+
+* Se regresa a la version del commit sin modificaciones
+git checkout -- archivo
+
+// Deshacer los cambios pero manteniendo el archivo en el stage
+git rest --soft codigo
+
+// Ver diferencias entre 2 commits
+git diff codigo1 codigo2
+
+// Diferencia entre el último y penúltimo commit
+* Virgulilla (~): Alt + 126
+git diff HEAD~1 HEAD
+
+// Muestra los commits con las referencias a los nombres de las ramas
+git log --oneline --decorate
+
+// Revertir commit
+* Se regresa al estado anterior al commit indicado, el revert se considera un nuevo commit
+git revert codigo
+
+* Presiona "i"
+* Escribir el mensaje del revert en un espacio en blanco
+* Presionar "Esc" y luego escribir ":wq" (Para guardar los cambios y salir)
+
+//Devolver estado a un commit determinado (Eliminando commits posteriores)
+git reset --hard codigo
+
+// Revertir commit (Sin hacer un nuevo commit)
+git revert --no-commit codigo
+
+// Revertir dos ultimos commits
+git revert --no-commit HEAD
+git revert --no-commit HEAD~1
+
+* Finalmente se confirma
+git revert --continue
+
+* Presionar "Esc" y escribir ":wq"
+
+// Ver ramas
+git branch
+
+// Crear rama
+git branch rama
+
+* Crear rama y cambiar
+git checkout -b rama
+
+// Cambiar de rama
+git checkout rama
+
+// Renombrar rama
+git branch -m (nombre de rama a cambiar) (nuevo nombre deseado)
+
+// Eliminar rama
+git branch -d (nombre de rama a borrar)
+
+// Comandos de ayuda con las ramas
+git branch -h
+
+// Agregar archivos a nueva rama
+git checkout nuevarama
+git add archivo
+git commit -m "descripcion"
+
+// Unir ramas (merge)
+* Si estás seguro de integrar una funcionalidad a tu proyecto de la rama principal
+* Ir a rama principal (como podría ser la rama master)
+git checkout master
+
+* Uniendo ramas
+git merge nuevarama
+
+* Al haber unido las ramas de forma exitosa, podríamos eliminar la rama secundaria
+git branch -d nuevarama
+
+// Si hay un conflicto en el merge
+* Git agregara al archivo dos porciones del codigo, cada una perteneciente a las ramas que se quieren unir
+* Para resolver este conflicto, solo hay que eliminar las referencias de git en el codigo, y definir manualmente la nueva estructura
+* Una vez se haya definido la estructura deseada en el merge, se agrega la modificacion al stage y luego se hace un commit
+* Si seguido del commit intentamos hacer un merge entre ambas ramas, Git dirá que no se puede hacer nada, debido a que definimos manualmente la nueva estructura del archivo con la unión
+* Para ver esta union en el historial:
+git log --oneline --graph
+
+// Crear clave SSH
+* Navegar a ubicación deseada
+* CD (hacia atrás) 
+cd ..
+
+* Escribimos
+ssh-keygen
+
+* Dejar passphrase vacío (Si no se desea contraseña)
+* Ir a la ubicación donde se creó la clave ssh (.ssh)
+* Abrir "id-rsa.pub" con un editor de texto (De lo contrario Windows lo tomará como un archivo de Microsoft Publisher y dará error)
+* Copiar el texto y pegarlo en SSH Keys, en GitHub
+* Guardar clave con un nombre, para identificar el dispositivo al cual hace referencia (La clave es única para cada dispositivo que usemos)
+
+* Creamos un repositorio remoto
+* Navegamos hacia carpeta de prueba en Git Bash
+* Creamos un archivo (Puede ser manual)
+touch archivo.txt
+
+* Inicializamos el repositorio local
+* Al archivo de prueba lo agregamos a stage y luego hacemos el primer commit
+* Renombramos rama "master" a main
+git branch -M main
+
+* Luego, en GitHub seleccionamos "SSH"
+* Copiamos una línea parecida a esta
+git remote add origin git@github.com:Usuario/repositorio.git
+
+* La pegamos en Git Bash y damos Enter
+* Luego comprobamos:
+git config --list
+
+* Ingresamos lo siguiente
+git push origin main
+* Aceptamos con "yes"
+
+
+// Creando un pull request
+
+* Para la prueba crearemos una cuenta secundaria
+username: joqueselo2
+password: TenIn2010
+
+* Creamos un repositorio con un README, y lo personalizamos
+
+* Desde nuestra cuenta principal, entramos al repositorio y le damos en "fork"
+* Esto creará una copia del repositorio en nuestra cuenta principal
+* Luego damos en "Code" y finalmente seleccionamos en Clone - HTTPS (https://github.com/JoseAlfaroo/pull-request.git)
+
+* En Git:
+* Navegamos a disco C
+* Ingresaremos "git clone https://github.com/JoseAlfaroo/pull-request.git"
+* Hacemos "ls" y navegamos hacia la carpeta con el nombre del repositorio clonado.
+* Ingresamos: cat (nombre del archivo README)
+
+* Ahora crearemos y entraremos a una nueva rama
+git checkout -b nuevarama
+
+* Editamos el archivo
+* Agregamos a stage y luego hacemos un commit
+
+* Luego vamos a añadir nuestra nueva rama al repositorio remoto
+git push origin nuevarama
+
+* Ahora en el repositorio remoto (Nuestro fork), vamos a tener ambas ramas
+* Seleccionamos la nueva rama, y podremos ver los cambios que estamos sugiriendo
+* Situados en esta nueva rama, le daremos a la opción de "Contribute", y luego "Open pull request"
+* Se abrirá un formulario, en el que tendremos que describir los cambios realizados
+* Finalmente damos "Create pull request"
+
+// Examinando un pull request
+* Desde la cuenta propietaria del proyecto, entraremos a nuestro repositorio 
+* Podremos ver en el apartado de "Pull requests" que alguien intenta contribuir al proyecto
+* Seleccionamos el pull request
+* Veremos una descripción del aporte que se intenta realizar
+* De igual manera podemos ver qué archivos se modificaron
+* Regresamos a "Conversation"
+* Damos en "Merge pull request" y luego "Confirm merge"
+* Finalmente veremos los cambios integrados en el repositorio principal
+
+
+// Etiquetas
+* Agregar etiqueta
+git tag nombre_etiqueta
+
+* Eliminar etiqueta
+git tag -d nombre_etiqueta
+
+* Agregar etiqueta con detalles
+git tag -a "nombre_etiqueta" -m "Descripcion de la etiqueta"
+
+*Versionamiento
+v1.0.0 = Cambio importante, cambio moderado, cambio mínimo
+
+* Mostrar descripción de etiqueta (Ver todos los cambios hasta el commit)
+git show "nombre_etiqueta"
+
+* Etiquetar un commit previo (Ejemplo de etiqueta previa: v0.0.1)
+git tag -a "nombre_etiqueta" "codigo de commit" -m "Descripcion de etiqueta" 
+
+
+// Agregar colaboradores a un repositorio remoto
+* Entramos al repositorio deseado y vamos a "Settings"
+* Le damos a "Collaborators" y escribimos el nombre de usuario del colaborador a integrar
+
+// Aceptar ser colaborador en un repositorio
+* Abrimos GitHub y vamos a notificaciones
+* Le damos a la invitación y luego en "Accept invitation"
+
+// Ramas remotas (Con repositorio ya subido)
+* Justo después de haber subido un repositorio, al hacer un git log, veremos que ahora hace referencia a una rama local y también a la rama remota
+* Hacemos cambios en un archivo, agregamos a stage y luego hacemos commit.
+* Hacemos git log, y veremos que nuestro último commit está en HEAD, y la referencia que hace a la rama remota, está justo antes
+
+* Ver todas las ramas (Incluidas las ramas remotas)
+git branch -a
+
+* Para agregar los cambios a la rama remota:
+git push origin rama_local
+
+
+// Pull
+* Crear archivo de prueba desde GitHub
+git pull origin rama
+* Hacemos "ls" y podremos ver que ahora tenemos el archivo de forma local
+
+* Otra manera sería configurar el seguimiento
+git branch --set-upstream-to=origin/main rama
+git pull
+
+// Eliminar rama remota
+git push origin --delete nuevarama
+
+// Sincronizar repositorio local con GitHub
+* Una vez hecho un commit
+* Asignamos repo como nombre para el url de GitHub
+git remote add repo git@github.com:JoseAlfaroo/Repositorio-Prueba.git
+
+// Subir cambios a "rama", de repositorio remoto
+git push -u repo rama
+
+// Anotaciones
+Clone = Clonar repositorio completo
+Push = Enviar commits a una rama de repositorio remoto
+Pull = Traer los commits desde rama de repositorio remoto
+
+
+// Hacer que Git ignore ciertos archivos
+
+* Ir a ubicación del repositorio local
+* Crear el archivo ".gitignore"
+* Escribir en ".gitignore" los archivos que nosotros deseamos ignorar de nuestro repositorio local
+* Agregamos .gitignore a stage y luego hacemos commit
+* Finalmente hacemos push a repositorio remoto, así veremos que los archivos indicados en gitignore no se subieron
+
+* IMPORTANTE
+* Configuraciones .gitignore para ciertos IDEs o lenguajes: https://github.com/github/gitignore
+
+
+// Rebase
+
+* Ejemplo
+Se tiene un repositorio y se espera que la rama principal integre funcionalidades a futuro
+pero para esto se necesitan complementos, los cuales permitirán el correcto funcionamiento
+
+* Creamos y cambiamos a una nueva rama
+* Agregamos un archivo (funcionalidades), y hacemos add - commit
+
+* Cambiamos a la rama main
+* Agregamos otro archivo (complementos), y hacemos add - commit
+
+* Cambiamos a la nueva rama para manejarla
+* Reubicamos los cambios hechos en esta nueva rama delante de nuestra rama principal (main)
+git rebase main
+
+* Verificaremos esto viendo que en la rama nueva se pueden visualizar los dos archivos
+mientras que en main solo veremos a uno (complementos)
+
+* Cambiamos a la rama main
+* Hacemos merge con la rama nueva
+* Hacemos push (git push origin main)
+
+* Finalmente el git log podremos ver que el historial de commits se reubicó,
+ya que pese a que primero agregamos el archivo de funcionalidades, este se muestra
+después que el de complementos, porque reubicamos a la rama nueva y sus commits
+delante de la rama main.
+
+* IMPORTANTE
+* El rebase debe ser usado con cuidado y en casos muy puntuales, su constante uso con un 
+equipo de trabajo podría generar conflictos
+
+
+// Rebase interactivo
+* Creamos los archivos A, B, C, D
+* Hacemos commits en el orden D C B A
+
+* Haremos en este ejemplo un rebase interactivo sobre los ultimos 4 commits (HEAD~4)
+git rebase -i HEAD~4
+
+* Primero cambiaremos el orden de los commits ordenando las líneas en el editor
+pick A, pick B, pick C, pick D
+
+* Guardamos (Esc y luego ":wq")
+* Los commits han sido reordenados (Cada uno de los hashes cambió)
+
+* Ahora lo que haremos es aplastar commits
+* Usaremos esos mismos últimos 4 commits
+git rebase -i HEAD~4
+
+* Cambiaremos los comandos de los commits en el editor
+pick A, squash B, squash C, squash D
+
+* Presionamos "Esc" e ingresamos ":wq" para guardar el squash
+
+* Saldrá una pantalla que nos pedirá el mensaje para los 4 commits
+* En este ejemplo pondremos "Se agregaron A, B, C y D"
+* Presionamos "Esc" e ingresamos ":wq" para hacer el commit final*
+
+* Gracias al squash veremos los últimos 4 commits en uno solo, con un solo mensaje.
+
+
+// Publicar página web con GitHub
+* Crear repositorio remoto
+* Ir a "Settings"
+* En la sección "Code and automation", seleccionar "Pages"
+* En "Branch", seleccionar nuestra rama principal (main/master), y luego darle a "Save"
+* Regresamos a "Code" y buscamos la sección "About", hacer clic en el botón de ajustes
+* En los ajustes de detalles del repositorio, buscaremos "Website", y le daremos en "Use your GitHub Pages Website"
+* Allí veremos el enlace del sitio web de nuestro repositorio
+* Luego subimos directamente archivos de una página html a nuestro repositorio remoto (Desde "Add file" o arrastrando)
+* De preferencia debe llamarse "index.html"
+* Escribimos un comentario para el commit.
+* Luego de las comprobaciones, puedes acceder desde el enlace de la sección "About" que vimos anteriormente
+
+* Listom
